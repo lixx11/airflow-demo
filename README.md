@@ -1,2 +1,2 @@
-# airflow-demo
-A demo workflow project using airflow.
+# data-demo
+A demo workflow project using airflow and gRPC.

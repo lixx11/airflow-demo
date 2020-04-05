@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package data_source;
+
+service DataSource {
+  rpc FetchData (DataRequest) returns (DataReply) {}
+}
+
+message DataRequest {
+  string name = 1;
+}
+
+message DataReply {
+  float a = 1;
+  float b = 2;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package signal;
+
+service Signal {
+  rpc CalcSignal (SignalRequest) returns (SignalReply) {}
+}
+
+message SignalRequest {
+  string name = 1;
+}
+
+message SignalReply {
+  float sig = 1;
+}

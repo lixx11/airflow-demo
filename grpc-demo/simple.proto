@@ -1,0 +1,15 @@
+syntax = "proto3";
+package simple;
+
+service Signal {
+    rpc Sum (signalRequest) returns (signalReply) {}
+}
+
+message signalRequest {
+    float a = 1;
+    float b = 2;
+}
+
+message signalReply {
+    float sum = 1;
+}

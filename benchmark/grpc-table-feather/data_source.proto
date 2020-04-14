@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package data_source;
+
+service DataSource {
+  rpc FetchData (Request) returns (Response) {}
+}
+
+message Request {
+  string name = 1;
+}
+
+message Response {
+  bytes data = 1;
+}

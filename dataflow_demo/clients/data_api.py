@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import time
+import sys
 
 from dataflow_demo.servers.data_source_rpc import DataSource
 from dataflow_demo.servers.data_source_rpc.ttypes import (
@@ -65,21 +66,28 @@ class DataAPI(BaseAPI):
     
 
 if __name__ == "__main__":
+    host = sys.argv[1]
+    port = sys.argv[2]
+    print('Connecting to %s:%s' % (host, port))
+
     tick_df = utils.build_dummy_tick_table()
     daily_df = utils.build_dummy_daily_table()
     signal_df = utils.build_dummy_signal_table()
 
-    api = DataAPI('localhost', 10000)
+    api = DataAPI(host, int(port))
     api.authenticate('zhuoshi', 'zhuoshi')
 
+    print('Testing read/write stock tick')
     api.write_stock_tick('20200418', tick_df)
     read_tick_df = api.read_stock_tick('20200418')
     assert read_tick_df.equals(tick_df)
 
+    print('Testing read/write stock daily')
     api.write_stock_daily('20200418', daily_df, 'api demo')
-    read_daily_df = api.read_stock_daily('20200416')
+    read_daily_df = api.read_stock_daily('20200418')
     assert read_daily_df.equals(daily_df)
 
+    print('Testing read/write signal')
     api.write_signal('20200418', signal_df, sig_type='demo_sig')
     read_signal_df = api.read_signal('20200418', sig_type='demo_sig')
     print('Passed all tests.')

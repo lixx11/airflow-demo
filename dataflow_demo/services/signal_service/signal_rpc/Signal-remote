@@ -16,20 +16,15 @@ else:
 from thrift.transport import TTransport, TSocket, TSSLSocket, THttpClient
 from thrift.protocol.TBinaryProtocol import TBinaryProtocol
 
-from data_source_rpc import DataSource
-from data_source_rpc.ttypes import *
+from signal_rpc import Signal
+from signal_rpc.ttypes import *
 
 if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('')
     print('Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] [-s[sl]] [-novalidate] [-ca_certs certs] [-keyfile keyfile] [-certfile certfile] function [arg1 [arg2...]]')
     print('')
     print('Functions:')
-    print('  UnversionedTable read_stock_tick(string date)')
-    print('  void write_stock_tick(UnversionedTable table)')
-    print('  VersionedTable read_stock_daily(string date)')
-    print('  void write_stock_daily(VersionedTable table)')
-    print('  VersionedTable read_signal(string date, string sig_type)')
-    print('  void write_signal(VersionedTable table)')
+    print('  string calc_signal(string date, bool commit, string comment)')
     print('')
     sys.exit(0)
 
@@ -106,44 +101,14 @@ else:
     else:
         transport = TTransport.TBufferedTransport(socket)
 protocol = TBinaryProtocol(transport)
-client = DataSource.Client(protocol)
+client = Signal.Client(protocol)
 transport.open()
 
-if cmd == 'read_stock_tick':
-    if len(args) != 1:
-        print('read_stock_tick requires 1 args')
+if cmd == 'calc_signal':
+    if len(args) != 3:
+        print('calc_signal requires 3 args')
         sys.exit(1)
-    pp.pprint(client.read_stock_tick(args[0],))
-
-elif cmd == 'write_stock_tick':
-    if len(args) != 1:
-        print('write_stock_tick requires 1 args')
-        sys.exit(1)
-    pp.pprint(client.write_stock_tick(eval(args[0]),))
-
-elif cmd == 'read_stock_daily':
-    if len(args) != 1:
-        print('read_stock_daily requires 1 args')
-        sys.exit(1)
-    pp.pprint(client.read_stock_daily(args[0],))
-
-elif cmd == 'write_stock_daily':
-    if len(args) != 1:
-        print('write_stock_daily requires 1 args')
-        sys.exit(1)
-    pp.pprint(client.write_stock_daily(eval(args[0]),))
-
-elif cmd == 'read_signal':
-    if len(args) != 2:
-        print('read_signal requires 2 args')
-        sys.exit(1)
-    pp.pprint(client.read_signal(args[0], args[1],))
-
-elif cmd == 'write_signal':
-    if len(args) != 1:
-        print('write_signal requires 1 args')
-        sys.exit(1)
-    pp.pprint(client.write_signal(eval(args[0]),))
+    pp.pprint(client.calc_signal(args[0], eval(args[1]), args[2],))
 
 else:
     print('Unrecognized method %s' % cmd)

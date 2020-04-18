@@ -91,15 +91,17 @@ class VersionedTable(object):
      - timestamp
      - user
      - comment
+     - sig_type
     """
 
 
-    def __init__(self, date=None, data=None, timestamp=None, user="", comment="",):
+    def __init__(self, date=None, data=None, timestamp=None, user="", comment="", sig_type="",):
         self.date = date
         self.data = data
         self.timestamp = timestamp
         self.user = user
         self.comment = comment
+        self.sig_type = sig_type
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -135,6 +137,11 @@ class VersionedTable(object):
                     self.comment = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
+            elif fid == 6:
+                if ftype == TType.STRING:
+                    self.sig_type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -164,6 +171,10 @@ class VersionedTable(object):
         if self.comment is not None:
             oprot.writeFieldBegin('comment', TType.STRING, 5)
             oprot.writeString(self.comment.encode('utf-8') if sys.version_info[0] == 2 else self.comment)
+            oprot.writeFieldEnd()
+        if self.sig_type is not None:
+            oprot.writeFieldBegin('sig_type', TType.STRING, 6)
+            oprot.writeString(self.sig_type.encode('utf-8') if sys.version_info[0] == 2 else self.sig_type)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -195,6 +206,7 @@ VersionedTable.thrift_spec = (
     (3, TType.DOUBLE, 'timestamp', None, None, ),  # 3
     (4, TType.STRING, 'user', 'UTF8', "", ),  # 4
     (5, TType.STRING, 'comment', 'UTF8', "", ),  # 5
+    (6, TType.STRING, 'sig_type', 'UTF8', "", ),  # 6
 )
 fix_spec(all_structs)
 del all_structs

@@ -1,8 +1,7 @@
-rpc:
-  host: 'localhost'
-  port: 10000
-
 data_server:
+  rpc:
+    host: 'localhost'
+    port: 10000
   mysql:
     host: 'localhost'
     port: 3306
@@ -23,3 +22,15 @@ data_server:
           - stock
           - futures
           - index
+      - model:
+        name: model
+        collections:
+          - signal
+
+signal_service:
+  rpc:
+    host: 'localhost'
+    port: 10001
+  data_server_auth:
+    user: 'signal_service'
+    password: 'signal_service'

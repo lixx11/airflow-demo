@@ -47,6 +47,21 @@ class Iface(object):
         """
         pass
 
+    def read_signal(self, date, sig_type):
+        """
+        Parameters:
+         - date
+         - sig_type
+        """
+        pass
+
+    def write_signal(self, table):
+        """
+        Parameters:
+         - table
+        """
+        pass
+
 
 class Client(Iface):
     def __init__(self, iprot, oprot=None):
@@ -175,6 +190,68 @@ class Client(Iface):
         iprot.readMessageEnd()
         return
 
+    def read_signal(self, date, sig_type):
+        """
+        Parameters:
+         - date
+         - sig_type
+        """
+        self.send_read_signal(date, sig_type)
+        return self.recv_read_signal()
+
+    def send_read_signal(self, date, sig_type):
+        self._oprot.writeMessageBegin('read_signal', TMessageType.CALL, self._seqid)
+        args = read_signal_args()
+        args.date = date
+        args.sig_type = sig_type
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_read_signal(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = read_signal_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "read_signal failed: unknown result")
+
+    def write_signal(self, table):
+        """
+        Parameters:
+         - table
+        """
+        self.send_write_signal(table)
+        self.recv_write_signal()
+
+    def send_write_signal(self, table):
+        self._oprot.writeMessageBegin('write_signal', TMessageType.CALL, self._seqid)
+        args = write_signal_args()
+        args.table = table
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_write_signal(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = write_signal_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        return
+
 
 class Processor(Iface, TProcessor):
     def __init__(self, handler):
@@ -184,6 +261,8 @@ class Processor(Iface, TProcessor):
         self._processMap["write_stock_tick"] = Processor.process_write_stock_tick
         self._processMap["read_stock_daily"] = Processor.process_read_stock_daily
         self._processMap["write_stock_daily"] = Processor.process_write_stock_daily
+        self._processMap["read_signal"] = Processor.process_read_signal
+        self._processMap["write_signal"] = Processor.process_write_signal
 
     def process(self, iprot, oprot):
         (name, type, seqid) = iprot.readMessageBegin()
@@ -288,6 +367,52 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.EXCEPTION
             result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
         oprot.writeMessageBegin("write_stock_daily", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+
+    def process_read_signal(self, seqid, iprot, oprot):
+        args = read_signal_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = read_signal_result()
+        try:
+            result.success = self._handler.read_signal(args.date, args.sig_type)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("read_signal", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+
+    def process_write_signal(self, seqid, iprot, oprot):
+        args = write_signal_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = write_signal_result()
+        try:
+            self._handler.write_signal(args.table)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("write_signal", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
@@ -746,6 +871,245 @@ class write_stock_daily_result(object):
         return not (self == other)
 all_structs.append(write_stock_daily_result)
 write_stock_daily_result.thrift_spec = (
+)
+
+
+class read_signal_args(object):
+    """
+    Attributes:
+     - date
+     - sig_type
+    """
+
+
+    def __init__(self, date=None, sig_type=None,):
+        self.date = date
+        self.sig_type = sig_type
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.STRING:
+                    self.date = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
+                if ftype == TType.STRING:
+                    self.sig_type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('read_signal_args')
+        if self.date is not None:
+            oprot.writeFieldBegin('date', TType.STRING, 1)
+            oprot.writeString(self.date.encode('utf-8') if sys.version_info[0] == 2 else self.date)
+            oprot.writeFieldEnd()
+        if self.sig_type is not None:
+            oprot.writeFieldBegin('sig_type', TType.STRING, 2)
+            oprot.writeString(self.sig_type.encode('utf-8') if sys.version_info[0] == 2 else self.sig_type)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(read_signal_args)
+read_signal_args.thrift_spec = (
+    None,  # 0
+    (1, TType.STRING, 'date', 'UTF8', None, ),  # 1
+    (2, TType.STRING, 'sig_type', 'UTF8', None, ),  # 2
+)
+
+
+class read_signal_result(object):
+    """
+    Attributes:
+     - success
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = VersionedTable()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('read_signal_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(read_signal_result)
+read_signal_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [VersionedTable, None], None, ),  # 0
+)
+
+
+class write_signal_args(object):
+    """
+    Attributes:
+     - table
+    """
+
+
+    def __init__(self, table=None,):
+        self.table = table
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.table = VersionedTable()
+                    self.table.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('write_signal_args')
+        if self.table is not None:
+            oprot.writeFieldBegin('table', TType.STRUCT, 1)
+            self.table.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(write_signal_args)
+write_signal_args.thrift_spec = (
+    None,  # 0
+    (1, TType.STRUCT, 'table', [VersionedTable, None], None, ),  # 1
+)
+
+
+class write_signal_result(object):
+
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('write_signal_result')
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(write_signal_result)
+write_signal_result.thrift_spec = (
 )
 fix_spec(all_structs)
 del all_structs

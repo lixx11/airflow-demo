@@ -17,32 +17,7 @@ from dataflow_demo.servers.data_source_rpc.ttypes import (
     VersionedTable,
     UnversionedTable,
 )
-
-
-def build_dummy_daily_table():
-    n = 100
-    df = pd.DataFrame({
-        'code': ['600001.SSE'] * n,
-        'date': ['20200101'] * n,
-        'low': [10.] * n,
-        'high': [12.] * n,
-        'open': [11.] * n,
-        'close': [11.] * n,
-    })
-    return df
-
-
-def build_dummy_tick_table():
-    n = 100
-    df = pd.DataFrame({
-        'datetime': ['20200101-09:30:00'] * n,
-        'code': ['600001.SSE'] * n,
-        'lastprice': [10.1] * n,
-        'bidprice': [10.1] * n,
-        'askprice': [10.1] * n,
-        'volume': [10000] * n,
-    })
-    return df
+from dataflow_demo import utils
 
 
 def main():
@@ -57,7 +32,7 @@ def main():
     print('Testing write stock tick')
     tick_table = UnversionedTable()
     tick_table.date = '20200416'
-    tick_df = build_dummy_tick_table()
+    tick_df = utils.build_dummy_tick_table()
     tick_table.data = context.serialize(tick_df).to_buffer().to_pybytes()
     client.write_stock_tick(table=tick_table)
     # read stock tick
@@ -69,7 +44,7 @@ def main():
     print('Testing write stock daily')
     daily_table = VersionedTable()
     daily_table.date = '20200416'
-    daily_df = build_dummy_daily_table()
+    daily_df = utils.build_dummy_daily_table()
     daily_table.data = context.serialize(daily_df).to_buffer().to_pybytes()
     daily_table.timestamp = time.time()
     daily_table.user = 'zhuoshi'
@@ -80,6 +55,23 @@ def main():
     response = client.read_stock_daily(date='20200416')
     df = context.deserialize(response.data)
     print(df.head())
+    # write signal
+    print('Testing write signal')
+    signal_table = VersionedTable()
+    signal_table.date = '20200418'
+    signal_df = utils.build_dummy_signal_table()
+    signal_table.data = context.serialize(signal_df).to_buffer().to_pybytes()
+    signal_table.timestamp = time.time()
+    signal_table.user = 'zhuoshi'
+    signal_table.comment = 'demo'
+    signal_table.sig_type = 'demo_sig'
+    client.write_signal(signal_table)
+    # read signal
+    print('Testing read signal')
+    response = client.read_signal(date='20200418', sig_type='demo_sig')
+    df = context.deserialize(response.data)
+    print(df.head())
+
     transport.close()
 
 

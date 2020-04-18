@@ -11,16 +11,21 @@ struct VersionedTable {
   3: double timestamp,
   4: string user='',
   5: string comment='',
+  6: string sig_type='',
 }
 
 service DataSource {
 
-   UnversionedTable read_stock_tick(1:string date),
+  UnversionedTable read_stock_tick(1:string date),
 
-   void write_stock_tick(1:UnversionedTable table),
+  void write_stock_tick(1:UnversionedTable table),
 
-   VersionedTable read_stock_daily(1:string date),
+  VersionedTable read_stock_daily(1:string date),
 
-   void write_stock_daily(1:VersionedTable table),
+  void write_stock_daily(1:VersionedTable table),
+
+  VersionedTable read_signal(1:string date, 2:string sig_type),
+
+  void write_signal(1:VersionedTable table),
 
 }

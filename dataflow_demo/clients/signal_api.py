@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import time
+import sys
 
 from dataflow_demo.services.signal_service.signal_rpc import Signal
 from dataflow_demo.clients.base_api import BaseAPI
@@ -18,9 +19,13 @@ class SignalAPI(BaseAPI):
     
 
 if __name__ == "__main__":
+    host = sys.argv[1]
+    port = sys.argv[2]
+    print('Connecting to %s:%s' % (host, port))
+
     signal_df = utils.build_dummy_signal_table()
 
-    api = SignalAPI('localhost', 10001)
+    api = SignalAPI(host, port)
     api.authenticate('zhuoshi', 'zhuoshi')
 
     api.calc_signal('20200418', commit=True, comment='api test')

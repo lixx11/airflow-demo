@@ -30,3 +30,5 @@ if __name__ == "__main__":
 
     api.calc_signal('20200418', commit=True, comment='api test')
     print('Passed all tests.')
+
+    api.close()

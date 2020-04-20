@@ -91,3 +91,5 @@ if __name__ == "__main__":
     api.write_signal('20200418', signal_df, sig_type='demo_sig')
     read_signal_df = api.read_signal('20200418', sig_type='demo_sig')
     print('Passed all tests.')
+
+    api.close()

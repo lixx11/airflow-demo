@@ -34,7 +34,7 @@ class SignalService(BaseService):
             host=self.host, port=self.port)
         self.tfactory = TTransport.TBufferedTransportFactory()
         self.pfactory = TBinaryProtocol.TBinaryProtocolFactory()
-        self.server = TServer.TSimpleServer(
+        self.server = TServer.TThreadedServer(
             self.processor, self.transport, self.tfactory, self.pfactory)
     
     def serve(self):

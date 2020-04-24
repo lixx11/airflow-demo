@@ -14,6 +14,7 @@ from thrift.server import TServer
 
 from dataflow_demo.services.signal_service.signal_rpc import Signal
 from dataflow_demo.services.base_service import BaseService
+from dataflow_demo.utils import check_login, check_rpc
 
 
 class SignalService(BaseService):
@@ -43,6 +44,7 @@ class SignalService(BaseService):
     class Handler:
         def __init__(self, data_api):
             self.data_api = data_api
+            self.token = self.data_api.token
             self.context = pa.default_serialization_context()
 
         def calc_signal(self, date, commit=False, comment=''):

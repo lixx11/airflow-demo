@@ -24,7 +24,7 @@ def main():
     transport.open()
 
     context = pa.default_serialization_context()
-    response = client.calc_signal('20200418', commit=True)
+    response = client.calc_signal('20200418', commit=True, comment='some comments')
     df = context.deserialize(response)
     print(df.head())
     transport.close()

@@ -24,12 +24,12 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] [-s[sl]] [-novalidate] [-ca_certs certs] [-keyfile keyfile] [-certfile certfile] function [arg1 [arg2...]]')
     print('')
     print('Functions:')
-    print('  UnversionedTable read_stock_tick(string date)')
-    print('  void write_stock_tick(UnversionedTable table)')
-    print('  VersionedTable read_stock_daily(string date)')
-    print('  void write_stock_daily(VersionedTable table)')
-    print('  VersionedTable read_signal(string date, string sig_type)')
-    print('  void write_signal(VersionedTable table)')
+    print('  UnversionedTable read_stock_tick(string token, string date)')
+    print('  bool write_stock_tick(string token, UnversionedTable table)')
+    print('  VersionedTable read_stock_daily(string token, string date)')
+    print('  bool write_stock_daily(string token, VersionedTable table)')
+    print('  VersionedTable read_signal(string token, string date, string sig_type)')
+    print('  bool write_signal(string token, VersionedTable table)')
     print('')
     sys.exit(0)
 
@@ -110,40 +110,40 @@ client = DataSource.Client(protocol)
 transport.open()
 
 if cmd == 'read_stock_tick':
-    if len(args) != 1:
-        print('read_stock_tick requires 1 args')
+    if len(args) != 2:
+        print('read_stock_tick requires 2 args')
         sys.exit(1)
-    pp.pprint(client.read_stock_tick(args[0],))
+    pp.pprint(client.read_stock_tick(args[0], args[1],))
 
 elif cmd == 'write_stock_tick':
-    if len(args) != 1:
-        print('write_stock_tick requires 1 args')
+    if len(args) != 2:
+        print('write_stock_tick requires 2 args')
         sys.exit(1)
-    pp.pprint(client.write_stock_tick(eval(args[0]),))
+    pp.pprint(client.write_stock_tick(args[0], eval(args[1]),))
 
 elif cmd == 'read_stock_daily':
-    if len(args) != 1:
-        print('read_stock_daily requires 1 args')
+    if len(args) != 2:
+        print('read_stock_daily requires 2 args')
         sys.exit(1)
-    pp.pprint(client.read_stock_daily(args[0],))
+    pp.pprint(client.read_stock_daily(args[0], args[1],))
 
 elif cmd == 'write_stock_daily':
-    if len(args) != 1:
-        print('write_stock_daily requires 1 args')
+    if len(args) != 2:
+        print('write_stock_daily requires 2 args')
         sys.exit(1)
-    pp.pprint(client.write_stock_daily(eval(args[0]),))
+    pp.pprint(client.write_stock_daily(args[0], eval(args[1]),))
 
 elif cmd == 'read_signal':
-    if len(args) != 2:
-        print('read_signal requires 2 args')
+    if len(args) != 3:
+        print('read_signal requires 3 args')
         sys.exit(1)
-    pp.pprint(client.read_signal(args[0], args[1],))
+    pp.pprint(client.read_signal(args[0], args[1], args[2],))
 
 elif cmd == 'write_signal':
-    if len(args) != 1:
-        print('write_signal requires 1 args')
+    if len(args) != 2:
+        print('write_signal requires 2 args')
         sys.exit(1)
-    pp.pprint(client.write_signal(eval(args[0]),))
+    pp.pprint(client.write_signal(args[0], eval(args[1]),))
 
 else:
     print('Unrecognized method %s' % cmd)

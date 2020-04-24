@@ -1,4 +1,5 @@
 import pandas as pd
+from thrift.Thrift import TApplicationException
 
 
 def build_dummy_daily_table(n=100):
@@ -48,4 +49,26 @@ def check_login(func):
             return func(self, *args, **kargs)
         else:
             raise NotLoginError('Not login yet!')
+    return wrapper
+
+
+def check_perm(func):
+    def wrapper(self, token, *args, **kargs):
+        api_name = func.__name__
+        has_perm = self.auth_api.has_perm(token, api_name)
+        if has_perm:
+            return func(self, token, *args, **kargs)
+        else:
+            print(f'Request for {api_name} from {token} is rejected!')
+            return None
+    return wrapper
+
+
+def check_rpc(func):
+    def wrapper(*args, **kargs):
+        try:
+            return func(*args, **kargs)
+        except TApplicationException:
+            print('ERROR! RPC failed, check your permission!')
+            return None
     return wrapper

@@ -12,8 +12,8 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
-from dataflow_demo.servers.data_source_rpc import DataSource
-from dataflow_demo.servers.data_source_rpc.ttypes import (
+from dataflow_demo.servers.data_server.data_source_rpc import DataSource
+from dataflow_demo.servers.data_server.data_source_rpc.ttypes import (
     VersionedTable,
     UnversionedTable,
 )
@@ -28,16 +28,18 @@ def main():
     transport.open()
 
     context = pa.default_serialization_context()
+    TOKEN = '4e11044e-625b-41b4-88a3-ade4324499f7'
+    DATE = '20200418'
     # write stock tick
     print('Testing write stock tick')
     tick_table = UnversionedTable()
     tick_table.date = '20200416'
     tick_df = utils.build_dummy_tick_table()
     tick_table.data = context.serialize(tick_df).to_buffer().to_pybytes()
-    client.write_stock_tick(table=tick_table)
+    client.write_stock_tick(TOKEN, tick_table)
     # read stock tick
     print('Testing read stock tick')
-    response = client.read_stock_tick(date='20200416')
+    response = client.read_stock_tick(TOKEN, DATE) 
     df = context.deserialize(response.data)
     print(df.head())
     # write stock daily
@@ -49,28 +51,28 @@ def main():
     daily_table.timestamp = time.time()
     daily_table.user = 'zhuoshi'
     daily_table.comment = 'demo'
-    client.write_stock_daily(table=daily_table)
+    client.write_stock_daily(TOKEN, daily_table)
     # read stock daily
-    print('Testing read stock daily')
-    response = client.read_stock_daily(date='20200416')
-    df = context.deserialize(response.data)
-    print(df.head())
-    # write signal
-    print('Testing write signal')
-    signal_table = VersionedTable()
-    signal_table.date = '20200418'
-    signal_df = utils.build_dummy_signal_table()
-    signal_table.data = context.serialize(signal_df).to_buffer().to_pybytes()
-    signal_table.timestamp = time.time()
-    signal_table.user = 'zhuoshi'
-    signal_table.comment = 'demo'
-    signal_table.sig_type = 'demo_sig'
-    client.write_signal(signal_table)
-    # read signal
-    print('Testing read signal')
-    response = client.read_signal(date='20200418', sig_type='demo_sig')
-    df = context.deserialize(response.data)
-    print(df.head())
+    # print('Testing read stock daily')
+    # response = client.read_stock_daily(TOKEN, DATE)
+    # df = context.deserialize(response.data)
+    # print(df.head())
+    # # write signal
+    # print('Testing write signal')
+    # signal_table = VersionedTable()
+    # signal_table.date = '20200418'
+    # signal_df = utils.build_dummy_signal_table()
+    # signal_table.data = context.serialize(signal_df).to_buffer().to_pybytes()
+    # signal_table.timestamp = time.time()
+    # signal_table.user = 'zhuoshi'
+    # signal_table.comment = 'demo'
+    # signal_table.sig_type = 'demo_sig'
+    # client.write_signal(signal_table)
+    # # read signal
+    # print('Testing read signal')
+    # response = client.read_signal(date='20200418', sig_type='demo_sig')
+    # df = context.deserialize(response.data)
+    # print(df.head())
 
     transport.close()
 

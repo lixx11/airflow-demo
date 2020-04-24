@@ -5,6 +5,7 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
+from dataflow_demo.clients.auth_api import AuthAPI
 from dataflow_demo.utils import NotLoginError
 
 
@@ -23,10 +24,16 @@ class BaseAPI:
     def _create_client(self):
         raise NotImplementedError
 
-    def authenticate(self, username, password):
-        self.__login = True
-        self.username = username
-        self.password = password
+    def authenticate(self, username, password, host, port):
+        auth_api = AuthAPI(host, port)
+        self.token = auth_api.authenticate(username, password)
+        if self.token is not None:
+            self.__login = True
+            self.username = username
+            self.password = password
+        else:
+            self.__login = False
+        auth_api.close()
     
     def is_login(self):
         return self.__login

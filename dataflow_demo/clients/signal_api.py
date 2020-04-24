@@ -5,7 +5,7 @@ import sys
 from dataflow_demo.services.signal_service.signal_rpc import Signal
 from dataflow_demo.clients.base_api import BaseAPI
 from dataflow_demo import utils
-from dataflow_demo.utils import NotLoginError, check_login
+from dataflow_demo.utils import NotLoginError, check_login, check_rpc
 
 
 class SignalAPI(BaseAPI):
@@ -13,6 +13,7 @@ class SignalAPI(BaseAPI):
         client = Signal.Client(self.protocol)
         return client
 
+    @check_rpc
     @check_login
     def calc_signal(self, date, commit=False, comment=''):
         self.client.calc_signal(date, commit=commit, comment=comment)
@@ -21,12 +22,13 @@ class SignalAPI(BaseAPI):
 if __name__ == "__main__":
     host = sys.argv[1]
     port = sys.argv[2]
+    auth_port = sys.argv[3]
     print('Connecting to %s:%s' % (host, port))
 
     signal_df = utils.build_dummy_signal_table()
 
     api = SignalAPI(host, port)
-    api.authenticate('zhuoshi', 'zhuoshi')
+    api.authenticate('zhuoshi', 'zhuoshi', host, auth_port)
 
     api.calc_signal('20200418', commit=True, comment='api test')
     print('Passed all tests.')

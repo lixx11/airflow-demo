@@ -1,0 +1,18 @@
+zhuoshi:
+  username: zhuoshi
+  password: zhuoshi
+  token: 0ff34151-edfb-4baa-b1bd-9098d9e59a86
+  permissions: '__all__'
+signal_service:
+  username: signal_service
+  password: signal_service
+  token: 05352a60-4aba-48c3-888a-a1c1a12a88db
+  permissions: '__all__'
+test:
+  username: test
+  password: test
+  token: 4e11044e-625b-41b4-88a3-ade4324499f7
+  permissions:
+    - calc_signal
+    - write_signal
+    - read_stock_tick

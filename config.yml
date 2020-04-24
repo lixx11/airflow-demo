@@ -1,3 +1,9 @@
+auth_server:
+  rpc:
+    host: 'localhost'
+    port: 9999
+  auth_file: '/home/xxli/repository/dataflow-demo/auth.yml'
+
 data_server:
   rpc:
     host: 'localhost'

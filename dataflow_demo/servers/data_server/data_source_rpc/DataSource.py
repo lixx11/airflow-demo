@@ -19,45 +19,51 @@ all_structs = []
 
 
 class Iface(object):
-    def read_stock_tick(self, date):
+    def read_stock_tick(self, token, date):
         """
         Parameters:
+         - token
          - date
         """
         pass
 
-    def write_stock_tick(self, table):
+    def write_stock_tick(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
         pass
 
-    def read_stock_daily(self, date):
+    def read_stock_daily(self, token, date):
         """
         Parameters:
+         - token
          - date
         """
         pass
 
-    def write_stock_daily(self, table):
+    def write_stock_daily(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
         pass
 
-    def read_signal(self, date, sig_type):
+    def read_signal(self, token, date, sig_type):
         """
         Parameters:
+         - token
          - date
          - sig_type
         """
         pass
 
-    def write_signal(self, table):
+    def write_signal(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
         pass
@@ -70,17 +76,19 @@ class Client(Iface):
             self._oprot = oprot
         self._seqid = 0
 
-    def read_stock_tick(self, date):
+    def read_stock_tick(self, token, date):
         """
         Parameters:
+         - token
          - date
         """
-        self.send_read_stock_tick(date)
+        self.send_read_stock_tick(token, date)
         return self.recv_read_stock_tick()
 
-    def send_read_stock_tick(self, date):
+    def send_read_stock_tick(self, token, date):
         self._oprot.writeMessageBegin('read_stock_tick', TMessageType.CALL, self._seqid)
         args = read_stock_tick_args()
+        args.token = token
         args.date = date
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -101,17 +109,19 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "read_stock_tick failed: unknown result")
 
-    def write_stock_tick(self, table):
+    def write_stock_tick(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
-        self.send_write_stock_tick(table)
-        self.recv_write_stock_tick()
+        self.send_write_stock_tick(token, table)
+        return self.recv_write_stock_tick()
 
-    def send_write_stock_tick(self, table):
+    def send_write_stock_tick(self, token, table):
         self._oprot.writeMessageBegin('write_stock_tick', TMessageType.CALL, self._seqid)
         args = write_stock_tick_args()
+        args.token = token
         args.table = table
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -128,19 +138,23 @@ class Client(Iface):
         result = write_stock_tick_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "write_stock_tick failed: unknown result")
 
-    def read_stock_daily(self, date):
+    def read_stock_daily(self, token, date):
         """
         Parameters:
+         - token
          - date
         """
-        self.send_read_stock_daily(date)
+        self.send_read_stock_daily(token, date)
         return self.recv_read_stock_daily()
 
-    def send_read_stock_daily(self, date):
+    def send_read_stock_daily(self, token, date):
         self._oprot.writeMessageBegin('read_stock_daily', TMessageType.CALL, self._seqid)
         args = read_stock_daily_args()
+        args.token = token
         args.date = date
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -161,17 +175,19 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "read_stock_daily failed: unknown result")
 
-    def write_stock_daily(self, table):
+    def write_stock_daily(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
-        self.send_write_stock_daily(table)
-        self.recv_write_stock_daily()
+        self.send_write_stock_daily(token, table)
+        return self.recv_write_stock_daily()
 
-    def send_write_stock_daily(self, table):
+    def send_write_stock_daily(self, token, table):
         self._oprot.writeMessageBegin('write_stock_daily', TMessageType.CALL, self._seqid)
         args = write_stock_daily_args()
+        args.token = token
         args.table = table
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -188,20 +204,24 @@ class Client(Iface):
         result = write_stock_daily_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "write_stock_daily failed: unknown result")
 
-    def read_signal(self, date, sig_type):
+    def read_signal(self, token, date, sig_type):
         """
         Parameters:
+         - token
          - date
          - sig_type
         """
-        self.send_read_signal(date, sig_type)
+        self.send_read_signal(token, date, sig_type)
         return self.recv_read_signal()
 
-    def send_read_signal(self, date, sig_type):
+    def send_read_signal(self, token, date, sig_type):
         self._oprot.writeMessageBegin('read_signal', TMessageType.CALL, self._seqid)
         args = read_signal_args()
+        args.token = token
         args.date = date
         args.sig_type = sig_type
         args.write(self._oprot)
@@ -223,17 +243,19 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "read_signal failed: unknown result")
 
-    def write_signal(self, table):
+    def write_signal(self, token, table):
         """
         Parameters:
+         - token
          - table
         """
-        self.send_write_signal(table)
-        self.recv_write_signal()
+        self.send_write_signal(token, table)
+        return self.recv_write_signal()
 
-    def send_write_signal(self, table):
+    def send_write_signal(self, token, table):
         self._oprot.writeMessageBegin('write_signal', TMessageType.CALL, self._seqid)
         args = write_signal_args()
+        args.token = token
         args.table = table
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -250,7 +272,9 @@ class Client(Iface):
         result = write_signal_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "write_signal failed: unknown result")
 
 
 class Processor(Iface, TProcessor):
@@ -285,7 +309,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = read_stock_tick_result()
         try:
-            result.success = self._handler.read_stock_tick(args.date)
+            result.success = self._handler.read_stock_tick(args.token, args.date)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -308,7 +332,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = write_stock_tick_result()
         try:
-            self._handler.write_stock_tick(args.table)
+            result.success = self._handler.write_stock_tick(args.token, args.table)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -331,7 +355,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = read_stock_daily_result()
         try:
-            result.success = self._handler.read_stock_daily(args.date)
+            result.success = self._handler.read_stock_daily(args.token, args.date)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -354,7 +378,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = write_stock_daily_result()
         try:
-            self._handler.write_stock_daily(args.table)
+            result.success = self._handler.write_stock_daily(args.token, args.table)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -377,7 +401,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = read_signal_result()
         try:
-            result.success = self._handler.read_signal(args.date, args.sig_type)
+            result.success = self._handler.read_signal(args.token, args.date, args.sig_type)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -400,7 +424,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = write_signal_result()
         try:
-            self._handler.write_signal(args.table)
+            result.success = self._handler.write_signal(args.token, args.table)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -423,11 +447,13 @@ class Processor(Iface, TProcessor):
 class read_stock_tick_args(object):
     """
     Attributes:
+     - token
      - date
     """
 
 
-    def __init__(self, date=None,):
+    def __init__(self, token=None, date=None,):
+        self.token = token
         self.date = date
 
     def read(self, iprot):
@@ -440,6 +466,11 @@ class read_stock_tick_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRING:
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRING:
                     self.date = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
@@ -454,8 +485,12 @@ class read_stock_tick_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('read_stock_tick_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.date is not None:
-            oprot.writeFieldBegin('date', TType.STRING, 1)
+            oprot.writeFieldBegin('date', TType.STRING, 2)
             oprot.writeString(self.date.encode('utf-8') if sys.version_info[0] == 2 else self.date)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -477,7 +512,8 @@ class read_stock_tick_args(object):
 all_structs.append(read_stock_tick_args)
 read_stock_tick_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'date', 'UTF8', None, ),  # 1
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRING, 'date', 'UTF8', None, ),  # 2
 )
 
 
@@ -545,11 +581,13 @@ read_stock_tick_result.thrift_spec = (
 class write_stock_tick_args(object):
     """
     Attributes:
+     - token
      - table
     """
 
 
-    def __init__(self, table=None,):
+    def __init__(self, token=None, table=None,):
+        self.token = token
         self.table = table
 
     def read(self, iprot):
@@ -562,6 +600,11 @@ class write_stock_tick_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRING:
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.table = UnversionedTable()
                     self.table.read(iprot)
@@ -577,8 +620,12 @@ class write_stock_tick_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_stock_tick_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.table is not None:
-            oprot.writeFieldBegin('table', TType.STRUCT, 1)
+            oprot.writeFieldBegin('table', TType.STRUCT, 2)
             self.table.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -600,12 +647,20 @@ class write_stock_tick_args(object):
 all_structs.append(write_stock_tick_args)
 write_stock_tick_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'table', [UnversionedTable, None], None, ),  # 1
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRUCT, 'table', [UnversionedTable, None], None, ),  # 2
 )
 
 
 class write_stock_tick_result(object):
+    """
+    Attributes:
+     - success
+    """
 
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -616,6 +671,11 @@ class write_stock_tick_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.BOOL:
+                    self.success = iprot.readBool()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -626,6 +686,10 @@ class write_stock_tick_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_stock_tick_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.BOOL, 0)
+            oprot.writeBool(self.success)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -644,17 +708,20 @@ class write_stock_tick_result(object):
         return not (self == other)
 all_structs.append(write_stock_tick_result)
 write_stock_tick_result.thrift_spec = (
+    (0, TType.BOOL, 'success', None, None, ),  # 0
 )
 
 
 class read_stock_daily_args(object):
     """
     Attributes:
+     - token
      - date
     """
 
 
-    def __init__(self, date=None,):
+    def __init__(self, token=None, date=None,):
+        self.token = token
         self.date = date
 
     def read(self, iprot):
@@ -667,6 +734,11 @@ class read_stock_daily_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRING:
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRING:
                     self.date = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
@@ -681,8 +753,12 @@ class read_stock_daily_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('read_stock_daily_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.date is not None:
-            oprot.writeFieldBegin('date', TType.STRING, 1)
+            oprot.writeFieldBegin('date', TType.STRING, 2)
             oprot.writeString(self.date.encode('utf-8') if sys.version_info[0] == 2 else self.date)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -704,7 +780,8 @@ class read_stock_daily_args(object):
 all_structs.append(read_stock_daily_args)
 read_stock_daily_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'date', 'UTF8', None, ),  # 1
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRING, 'date', 'UTF8', None, ),  # 2
 )
 
 
@@ -772,11 +849,13 @@ read_stock_daily_result.thrift_spec = (
 class write_stock_daily_args(object):
     """
     Attributes:
+     - token
      - table
     """
 
 
-    def __init__(self, table=None,):
+    def __init__(self, token=None, table=None,):
+        self.token = token
         self.table = table
 
     def read(self, iprot):
@@ -789,6 +868,11 @@ class write_stock_daily_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRING:
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.table = VersionedTable()
                     self.table.read(iprot)
@@ -804,8 +888,12 @@ class write_stock_daily_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_stock_daily_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.table is not None:
-            oprot.writeFieldBegin('table', TType.STRUCT, 1)
+            oprot.writeFieldBegin('table', TType.STRUCT, 2)
             self.table.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -827,12 +915,20 @@ class write_stock_daily_args(object):
 all_structs.append(write_stock_daily_args)
 write_stock_daily_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'table', [VersionedTable, None], None, ),  # 1
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRUCT, 'table', [VersionedTable, None], None, ),  # 2
 )
 
 
 class write_stock_daily_result(object):
+    """
+    Attributes:
+     - success
+    """
 
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -843,6 +939,11 @@ class write_stock_daily_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.BOOL:
+                    self.success = iprot.readBool()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -853,6 +954,10 @@ class write_stock_daily_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_stock_daily_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.BOOL, 0)
+            oprot.writeBool(self.success)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -871,18 +976,21 @@ class write_stock_daily_result(object):
         return not (self == other)
 all_structs.append(write_stock_daily_result)
 write_stock_daily_result.thrift_spec = (
+    (0, TType.BOOL, 'success', None, None, ),  # 0
 )
 
 
 class read_signal_args(object):
     """
     Attributes:
+     - token
      - date
      - sig_type
     """
 
 
-    def __init__(self, date=None, sig_type=None,):
+    def __init__(self, token=None, date=None, sig_type=None,):
+        self.token = token
         self.date = date
         self.sig_type = sig_type
 
@@ -897,10 +1005,15 @@ class read_signal_args(object):
                 break
             if fid == 1:
                 if ftype == TType.STRING:
-                    self.date = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
+                if ftype == TType.STRING:
+                    self.date = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 3:
                 if ftype == TType.STRING:
                     self.sig_type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
@@ -915,12 +1028,16 @@ class read_signal_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('read_signal_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.date is not None:
-            oprot.writeFieldBegin('date', TType.STRING, 1)
+            oprot.writeFieldBegin('date', TType.STRING, 2)
             oprot.writeString(self.date.encode('utf-8') if sys.version_info[0] == 2 else self.date)
             oprot.writeFieldEnd()
         if self.sig_type is not None:
-            oprot.writeFieldBegin('sig_type', TType.STRING, 2)
+            oprot.writeFieldBegin('sig_type', TType.STRING, 3)
             oprot.writeString(self.sig_type.encode('utf-8') if sys.version_info[0] == 2 else self.sig_type)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -942,8 +1059,9 @@ class read_signal_args(object):
 all_structs.append(read_signal_args)
 read_signal_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRING, 'date', 'UTF8', None, ),  # 1
-    (2, TType.STRING, 'sig_type', 'UTF8', None, ),  # 2
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRING, 'date', 'UTF8', None, ),  # 2
+    (3, TType.STRING, 'sig_type', 'UTF8', None, ),  # 3
 )
 
 
@@ -1011,11 +1129,13 @@ read_signal_result.thrift_spec = (
 class write_signal_args(object):
     """
     Attributes:
+     - token
      - table
     """
 
 
-    def __init__(self, table=None,):
+    def __init__(self, token=None, table=None,):
+        self.token = token
         self.table = table
 
     def read(self, iprot):
@@ -1028,6 +1148,11 @@ class write_signal_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRING:
+                    self.token = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.table = VersionedTable()
                     self.table.read(iprot)
@@ -1043,8 +1168,12 @@ class write_signal_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_signal_args')
+        if self.token is not None:
+            oprot.writeFieldBegin('token', TType.STRING, 1)
+            oprot.writeString(self.token.encode('utf-8') if sys.version_info[0] == 2 else self.token)
+            oprot.writeFieldEnd()
         if self.table is not None:
-            oprot.writeFieldBegin('table', TType.STRUCT, 1)
+            oprot.writeFieldBegin('table', TType.STRUCT, 2)
             self.table.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1066,12 +1195,20 @@ class write_signal_args(object):
 all_structs.append(write_signal_args)
 write_signal_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'table', [VersionedTable, None], None, ),  # 1
+    (1, TType.STRING, 'token', 'UTF8', None, ),  # 1
+    (2, TType.STRUCT, 'table', [VersionedTable, None], None, ),  # 2
 )
 
 
 class write_signal_result(object):
+    """
+    Attributes:
+     - success
+    """
 
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1082,6 +1219,11 @@ class write_signal_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.BOOL:
+                    self.success = iprot.readBool()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1092,6 +1234,10 @@ class write_signal_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('write_signal_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.BOOL, 0)
+            oprot.writeBool(self.success)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1110,6 +1256,7 @@ class write_signal_result(object):
         return not (self == other)
 all_structs.append(write_signal_result)
 write_signal_result.thrift_spec = (
+    (0, TType.BOOL, 'success', None, None, ),  # 0
 )
 fix_spec(all_structs)
 del all_structs

@@ -23,6 +23,6 @@ All done!
 
 ## Test
 ```
-python -m dataflow_demo.clients.data_api 121.89.209.254 10000
-python -m dataflow_demo.clients.signal_api 121.89.209.254 10001
+python -m dataflow_demo.clients.data_api 121.89.209.254 10000 9999
+python -m dataflow_demo.clients.signal_api 121.89.209.254 10001 9999
 ```

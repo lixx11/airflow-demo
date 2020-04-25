@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>dataflow_demo.clients package &#8212; dataflow-demo 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dataflow_demo.servers package" href="dataflow_demo.servers.html" />
+    <link rel="prev" title="dataflow_demo package" href="dataflow_demo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dataflow_demo.servers.html" title="dataflow_demo.servers package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dataflow_demo.html" title="dataflow_demo package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">dataflow-demo 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="dataflow_demo.html" accesskey="U">dataflow_demo package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dataflow-demo-clients-package">
+<h1>dataflow_demo.clients package<a class="headerlink" href="#dataflow-demo-clients-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-dataflow_demo.clients.auth_api">
+<span id="dataflow-demo-clients-auth-api-module"></span><h2>dataflow_demo.clients.auth_api module<a class="headerlink" href="#module-dataflow_demo.clients.auth_api" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dataflow_demo.clients.auth_api.AuthAPI">
+<em class="property">class </em><code class="sig-prename descclassname">dataflow_demo.clients.auth_api.</code><code class="sig-name descname">AuthAPI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.auth_api.AuthAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dataflow_demo.clients.auth_api.AuthAPI.authenticate">
+<code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.auth_api.AuthAPI.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.auth_api.AuthAPI.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.auth_api.AuthAPI.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.auth_api.AuthAPI.has_perm">
+<code class="sig-name descname">has_perm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token</span></em>, <em class="sig-param"><span class="n">api</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.auth_api.AuthAPI.has_perm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dataflow_demo.clients.base_api">
+<span id="dataflow-demo-clients-base-api-module"></span><h2>dataflow_demo.clients.base_api module<a class="headerlink" href="#module-dataflow_demo.clients.base_api" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dataflow_demo.clients.base_api.BaseAPI">
+<em class="property">class </em><code class="sig-prename descclassname">dataflow_demo.clients.base_api.</code><code class="sig-name descname">BaseAPI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.base_api.BaseAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="dataflow_demo.clients.base_api.BaseAPI.authenticate">
+<code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.base_api.BaseAPI.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.base_api.BaseAPI.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.base_api.BaseAPI.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.base_api.BaseAPI.is_login">
+<code class="sig-name descname">is_login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.base_api.BaseAPI.is_login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dataflow_demo.clients.data_api">
+<span id="dataflow-demo-clients-data-api-module"></span><h2>dataflow_demo.clients.data_api module<a class="headerlink" href="#module-dataflow_demo.clients.data_api" title="Permalink to this headline">¶</a></h2>
+<p>APIs for data server.</p>
+<dl class="py class">
+<dt id="dataflow_demo.clients.data_api.DataAPI">
+<em class="property">class </em><code class="sig-prename descclassname">dataflow_demo.clients.data_api.</code><code class="sig-name descname">DataAPI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dataflow_demo.clients.base_api.BaseAPI" title="dataflow_demo.clients.base_api.BaseAPI"><code class="xref py py-class docutils literal notranslate"><span class="pre">dataflow_demo.clients.base_api.BaseAPI</span></code></a></p>
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.read_signal">
+<code class="sig-name descname">read_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">sig_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.read_signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.read_stock_daily">
+<code class="sig-name descname">read_stock_daily</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.read_stock_daily" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.read_stock_tick">
+<code class="sig-name descname">read_stock_tick</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.read_stock_tick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.write_signal">
+<code class="sig-name descname">write_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">sig_type</span></em>, <em class="sig-param"><span class="n">comment</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.write_signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.write_stock_daily">
+<code class="sig-name descname">write_stock_daily</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">comment</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.write_stock_daily" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="dataflow_demo.clients.data_api.DataAPI.write_stock_tick">
+<code class="sig-name descname">write_stock_tick</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.data_api.DataAPI.write_stock_tick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write stock tick <code class="docutils literal notranslate"><span class="pre">df</span></code> on <code class="docutils literal notranslate"><span class="pre">date</span></code> to data server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date</strong> (<em>string</em>) – date in %Y%m%d format, e.g. 20200418.</p></li>
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – stock tick dataframe, columns are defined in <code class="docutils literal notranslate"><span class="pre">Notes</span></code> section.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">api</span> <span class="o">=</span> <span class="n">dataflow_demo</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">data_api</span><span class="o">.</span><span class="n">DataAPI</span><span class="p">(</span><span class="n">data_host</span><span class="p">,</span> <span class="n">data_port</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">auth_host</span><span class="p">,</span> <span class="n">auth_port</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span><span class="o">.</span><span class="n">write_stock_tick</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>tick dataframe format</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 10%" />
+<col style="width: 16%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>index</p></th>
+<th class="head"><p>Column Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>datetime</p></td>
+<td><p>日期</p></td>
+<td><p>str</p></td>
+<td><p>20190920</p></td>
+<td><p>SSE(上海)/SZE(深圳)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>code</p></td>
+<td><p>股票代码</p></td>
+<td><p>str</p></td>
+<td><p>600000.SSE</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>lastprice</p></td>
+<td><p>最新价格</p></td>
+<td><p>double</p></td>
+<td><p>10.22</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>bidprice</p></td>
+<td><p>卖价</p></td>
+<td><p>double</p></td>
+<td><p>10.22</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>askprice</p></td>
+<td><p>买价</p></td>
+<td><p>double</p></td>
+<td><p>10.22</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>volume</p></td>
+<td><p>成交量</p></td>
+<td><p>int</p></td>
+<td><p>20</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dataflow_demo.clients.signal_api">
+<span id="dataflow-demo-clients-signal-api-module"></span><h2>dataflow_demo.clients.signal_api module<a class="headerlink" href="#module-dataflow_demo.clients.signal_api" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="dataflow_demo.clients.signal_api.SignalAPI">
+<em class="property">class </em><code class="sig-prename descclassname">dataflow_demo.clients.signal_api.</code><code class="sig-name descname">SignalAPI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.signal_api.SignalAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dataflow_demo.clients.base_api.BaseAPI" title="dataflow_demo.clients.base_api.BaseAPI"><code class="xref py py-class docutils literal notranslate"><span class="pre">dataflow_demo.clients.base_api.BaseAPI</span></code></a></p>
+<dl class="py method">
+<dt id="dataflow_demo.clients.signal_api.SignalAPI.calc_signal">
+<code class="sig-name descname">calc_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">commit</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">comment</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataflow_demo.clients.signal_api.SignalAPI.calc_signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dataflow_demo.clients">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dataflow_demo.clients" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">dataflow_demo.clients package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-dataflow_demo.clients.auth_api">dataflow_demo.clients.auth_api module</a></li>
+<li><a class="reference internal" href="#module-dataflow_demo.clients.base_api">dataflow_demo.clients.base_api module</a></li>
+<li><a class="reference internal" href="#module-dataflow_demo.clients.data_api">dataflow_demo.clients.data_api module</a></li>
+<li><a class="reference internal" href="#module-dataflow_demo.clients.signal_api">dataflow_demo.clients.signal_api module</a></li>
+<li><a class="reference internal" href="#module-dataflow_demo.clients">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dataflow_demo.html"
+                        title="previous chapter">dataflow_demo package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dataflow_demo.servers.html"
+                        title="next chapter">dataflow_demo.servers package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dataflow_demo.clients.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dataflow_demo.servers.html" title="dataflow_demo.servers package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dataflow_demo.html" title="dataflow_demo package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">dataflow-demo 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="dataflow_demo.html" >dataflow_demo package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, xxli.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.2.
+    </div>
+  </body>
+</html>

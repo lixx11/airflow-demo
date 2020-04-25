@@ -1,6 +1,11 @@
 #!/usr/bin/env python
+"""APIs for data server.
+"""
+
+
 import time
 import sys
+import pandas as pd
 
 from thrift.Thrift import TApplicationException
 
@@ -23,6 +28,41 @@ class DataAPI(BaseAPI):
     @check_rpc
     @check_login
     def write_stock_tick(self, date, df):
+        """Write stock tick ``df`` on ``date`` to data server.
+
+        Parameters
+        ----------
+        date : string
+            date in %Y%m%d format, e.g. 20200418.
+        df : pd.DataFrame
+            stock tick dataframe, columns are defined in ``Notes`` section.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+
+        >>> api = dataflow_demo.clients.data_api.DataAPI(data_host, data_port)
+        >>> api.authenticate(username, password, auth_host, auth_port)
+        >>> api.write_stock_tick(date, df)
+
+        Notes
+        -----
+        tick dataframe format
+
+        =====  ===========  ===========  ======  ==========  ===================
+        index  Column Name  Description  Type    Example     Comment
+        =====  ===========  ===========  ======  ==========  ===================
+        1      datetime     日期         str     20190920    SSE(上海)/SZE(深圳)
+        2      code         股票代码     str     600000.SSE  
+        3      lastprice    最新价格     double  10.22       
+        4      bidprice     卖价         double  10.22      
+        5      askprice     买价         double  10.22         
+        6      volume       成交量       int     20         
+        =====  ===========  ===========  ======  ==========  ===================
+        """
         tick_table = UnversionedTable()
         tick_table.date = date
         tick_table.data = self._context.serialize(df).to_buffer().to_pybytes()

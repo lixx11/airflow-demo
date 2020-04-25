@@ -1,4 +1,5 @@
 import pandas as pd
+from functools import wraps
 from thrift.Thrift import TApplicationException
 
 
@@ -44,6 +45,7 @@ class NotLoginError(Exception):
 
 
 def check_login(func):
+    @wraps(func)
     def wrapper(self, *args, **kargs):
         if self.is_login():
             return func(self, *args, **kargs)
@@ -53,6 +55,7 @@ def check_login(func):
 
 
 def check_perm(func):
+    @wraps(func)
     def wrapper(self, token, *args, **kargs):
         api_name = func.__name__
         has_perm = self.auth_api.has_perm(token, api_name)
@@ -65,6 +68,7 @@ def check_perm(func):
 
 
 def check_rpc(func):
+    @wraps(func)
     def wrapper(*args, **kargs):
         try:
             return func(*args, **kargs)
